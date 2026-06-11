@@ -1235,9 +1235,9 @@
                 </p>
 
                 <div class="flex flex-col sm:flex-row items-center gap-6 mb-12">
-                    <button onclick="abrirPopup('https://payfast.greenn.com.br/171165?batch=14207_b2TkAB')" class="btn-shimmer btn-gold w-full sm:w-auto font-bold uppercase tracking-[0.15em] py-5 px-10 rounded-xl transition-all duration-300 shadow-[0_0_30px_rgba(163,136,70,0.35)] hover:-translate-y-1">
+                    <a href="#ingressos" class="btn-shimmer btn-gold w-full sm:w-auto font-bold uppercase tracking-[0.15em] py-5 px-10 rounded-xl transition-all duration-300 shadow-[0_0_30px_rgba(163,136,70,0.35)] hover:-translate-y-1 inline-block text-center">
                         Quero minha vaga na Imersão LEX
-                    </button>
+                    </a>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-8 border-t border-white/10 max-w-5xl">
@@ -1711,7 +1711,7 @@
                             <span class="pricing-price-cash text-brand-textPrimary/75">ou R$ 1.597 à vista</span>
                         </div>
 
-                        <button onclick="abrirPopup('https://payfast.greenn.com.br/171165?batch=14207_b2TkAB')" class="btn-shimmer pricing-btn pricing-btn--ouro mt-auto">
+                        <button type="button" onclick="abrirPopupOuro()" class="btn-shimmer pricing-btn pricing-btn--ouro mt-auto">
                             Garantir Minha Vaga
                         </button>
                     </div>
@@ -1765,7 +1765,7 @@
                             <span class="pricing-price-cash text-brand-textSecondary">ou R$ 2.697 à vista</span>
                         </div>
 
-                        <button onclick="abrirPopup('https://payfast.greenn.com.br/171165?batch=14207_V8QGUc')" class="btn-shimmer pricing-btn pricing-btn--diamante mt-auto">
+                        <button type="button" onclick="abrirPopupDiamante()" class="btn-shimmer pricing-btn pricing-btn--diamante mt-auto">
                             Quero o Acesso Diamante
                         </button>
                     </div>
@@ -1789,9 +1789,9 @@
             </p>
             <p class="text-xl font-bold text-brand-textPrimary mb-10 italic" data-aos="fade-right" data-aos-delay="200">Nos vemos no LEX.</p>
 
-            <button onclick="abrirPopup('https://payfast.greenn.com.br/171165?batch=14207_b2TkAB')" class="btn-shimmer btn-gold w-full sm:w-auto font-bold uppercase tracking-[0.15em] py-5 px-12 rounded-xl transition-all duration-300 shadow-[0_0_30px_rgba(163,136,70,0.35)] hover:-translate-y-1 mb-8 inline-block" data-aos="fade-up" data-aos-delay="300">
+            <a href="#ingressos" class="btn-shimmer btn-gold w-full sm:w-auto font-bold uppercase tracking-[0.15em] py-5 px-12 rounded-xl transition-all duration-300 shadow-[0_0_30px_rgba(163,136,70,0.35)] hover:-translate-y-1 mb-8 inline-block" data-aos="fade-up" data-aos-delay="300">
                 Garantir Minha Vaga Agora
-            </button>
+            </a>
 
             <div class="mt-4 border-t border-white/5 pt-8" data-aos="fade-left" data-aos-delay="400">
                 <p class="text-sm text-brand-textMuted mb-4">Ficou com alguma dúvida antes de decidir?</p>
@@ -1855,44 +1855,89 @@
         </div>
     </footer>
 
-    <!-- ─── POPUP ─── -->
-    <div id="popup-captura" class="fixed inset-0 z-[100] hidden items-center justify-center p-4 bg-brand-bg/90 backdrop-blur-xl" aria-hidden="true">
+    <!-- ─── POPUP OURO ─── -->
+    <div id="popup-captura-ouro" class="popup-captura fixed inset-0 z-[100] hidden items-center justify-center p-4 bg-brand-bg/90 backdrop-blur-xl" aria-hidden="true">
         <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-brand-goldLight/10 rounded-full blur-[100px] pointer-events-none"></div>
         <div class="relative bg-brand-surface border border-white/10 rounded-3xl shadow-[0_0_80px_rgba(226,190,124,0.15)] max-w-md w-full p-8 md:p-10">
-            <button type="button" onclick="fecharPopup()" class="absolute top-6 right-6 w-10 h-10 rounded-full bg-white/5 border border-white/10 hover:bg-brand-goldDeep hover:border-brand-goldLight hover:text-brand-textPrimary flex items-center justify-center text-brand-textSecondary transition-all duration-300 hover:rotate-90" aria-label="Fechar">
+            <button type="button" onclick="fecharPopupOuro()" class="absolute top-6 right-6 w-10 h-10 rounded-full bg-white/5 border border-white/10 hover:bg-brand-goldDeep hover:border-brand-goldLight hover:text-brand-textPrimary flex items-center justify-center text-brand-textSecondary transition-all duration-300 hover:rotate-90" aria-label="Fechar">
                 <i class="fas fa-times"></i>
             </button>
 
             <div class="text-center mb-8">
                 <img src="assets/111.webp" alt="LEX" class="h-16 md:h-20 w-auto mx-auto mb-4">
-                <div class="text-brand-primary text-[10px] font-black uppercase tracking-[0.2em] mb-2">Acesso Exclusivo</div>
+                <div class="text-brand-primary text-[10px] font-black uppercase tracking-[0.2em] mb-2">Ingresso Ouro</div>
                 <h3 class="font-black text-2xl text-brand-textPrimary uppercase tracking-tight mb-2">Garanta sua Vaga</h3>
-                <p class="text-sm text-brand-textSecondary">Preencha os dados abaixo para avançar ao pagamento oficial.</p>
+                <p class="text-sm text-brand-textSecondary">Preencha os dados abaixo para avançar ao pagamento do Ingresso Ouro.</p>
             </div>
 
-            <form id="form-captura-lex" class="space-y-4 mt-6 popup-form">
+            <form id="form-captura-ouro" class="space-y-4 mt-6 popup-form" data-checkout="https://payfast.greenn.com.br/171165?batch=14207_b2TkAB">
                 <div>
-                    <label for="lead-nome" class="block text-sm font-medium text-brand-textSecondary mb-1">Nome</label>
-                    <input type="text" id="lead-nome" name="nome" required placeholder="Seu nome completo" class="w-full px-4 py-3 rounded-lg bg-brand-bg border border-white/10 text-brand-textPrimary placeholder-brand-textMuted focus:border-brand-goldLight focus:ring-1 focus:ring-brand-goldLight outline-none transition-all duration-200 hover:border-white/25">
+                    <label for="lead-nome-ouro" class="block text-sm font-medium text-brand-textSecondary mb-1">Nome</label>
+                    <input type="text" id="lead-nome-ouro" name="nome" required placeholder="Seu nome completo" class="w-full px-4 py-3 rounded-lg bg-brand-bg border border-white/10 text-brand-textPrimary placeholder-brand-textMuted focus:border-brand-goldLight focus:ring-1 focus:ring-brand-goldLight outline-none transition-all duration-200 hover:border-white/25">
                 </div>
                 <div>
-                    <label for="lead-email" class="block text-sm font-medium text-brand-textSecondary mb-1">Email</label>
-                    <input type="email" id="lead-email" name="email" required placeholder="seu@email.com" class="w-full px-4 py-3 rounded-lg bg-brand-bg border border-white/10 text-brand-textPrimary placeholder-brand-textMuted focus:border-brand-goldLight focus:ring-1 focus:ring-brand-goldLight outline-none transition-all duration-200 hover:border-white/25">
+                    <label for="lead-email-ouro" class="block text-sm font-medium text-brand-textSecondary mb-1">Email</label>
+                    <input type="email" id="lead-email-ouro" name="email" required placeholder="seu@email.com" class="w-full px-4 py-3 rounded-lg bg-brand-bg border border-white/10 text-brand-textPrimary placeholder-brand-textMuted focus:border-brand-goldLight focus:ring-1 focus:ring-brand-goldLight outline-none transition-all duration-200 hover:border-white/25">
                 </div>
                 <div>
-                    <label for="lead-phone" class="block text-sm font-medium text-brand-textSecondary mb-1">Telefone</label>
+                    <label for="lead-phone-ouro" class="block text-sm font-medium text-brand-textSecondary mb-1">Telefone</label>
                     <div class="flex rounded-lg overflow-hidden border border-white/10 focus-within:border-brand-goldLight focus-within:ring-1 focus-within:ring-brand-goldLight bg-brand-bg transition-all duration-200">
                         <span class="inline-flex items-center px-4 py-3 bg-gradient-to-r from-brand-goldLight to-brand-goldDeep text-brand-bg font-bold select-none shrink-0">+55</span>
-                        <input type="tel" id="lead-phone" name="phone" required placeholder="(11) 99999-9999" maxlength="15" autocomplete="tel" class="flex-1 px-4 py-3 bg-transparent text-brand-textPrimary placeholder-brand-textMuted outline-none min-w-0 mask-telefone">
+                        <input type="tel" id="lead-phone-ouro" name="phone" required placeholder="(11) 99999-9999" maxlength="15" autocomplete="tel" class="flex-1 px-4 py-3 bg-transparent text-brand-textPrimary placeholder-brand-textMuted outline-none min-w-0 mask-telefone">
                     </div>
                     <p class="error-msg text-brand-goldLight text-xs mt-1 hidden"><i class="fas fa-exclamation-circle mr-1"></i>Informe o DDD e o número completo.</p>
                 </div>
-                <input type="hidden" id="utm_source" name="utm_source" value="">
-                <input type="hidden" id="utm_term" name="utm_term" value="">
-                <input type="hidden" id="utm_campaign" name="utm_campaign" value="">
-                <input type="hidden" id="utm_medium" name="utm_medium" value="">
-                <input type="hidden" id="utm_content" name="utm_content" value="">
-                <input type="hidden" id="url" name="url" value="">
+                <input type="hidden" name="utm_source" value="">
+                <input type="hidden" name="utm_term" value="">
+                <input type="hidden" name="utm_campaign" value="">
+                <input type="hidden" name="utm_medium" value="">
+                <input type="hidden" name="utm_content" value="">
+                <input type="hidden" name="url" value="">
+                <button type="submit" class="btn-shimmer btn-gold w-full font-sans font-bold py-4 rounded-xl uppercase tracking-widest transition-all duration-300 hover:-translate-y-0.5 btn-submit mt-2">
+                    Avançar para Pagamento
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ─── POPUP DIAMANTE ─── -->
+    <div id="popup-captura-diamante" class="popup-captura fixed inset-0 z-[100] hidden items-center justify-center p-4 bg-brand-bg/90 backdrop-blur-xl" aria-hidden="true">
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-brand-goldLight/10 rounded-full blur-[100px] pointer-events-none"></div>
+        <div class="relative bg-brand-surface border border-white/10 rounded-3xl shadow-[0_0_80px_rgba(226,190,124,0.15)] max-w-md w-full p-8 md:p-10">
+            <button type="button" onclick="fecharPopupDiamante()" class="absolute top-6 right-6 w-10 h-10 rounded-full bg-white/5 border border-white/10 hover:bg-brand-goldDeep hover:border-brand-goldLight hover:text-brand-textPrimary flex items-center justify-center text-brand-textSecondary transition-all duration-300 hover:rotate-90" aria-label="Fechar">
+                <i class="fas fa-times"></i>
+            </button>
+
+            <div class="text-center mb-8">
+                <img src="assets/111.webp" alt="LEX" class="h-16 md:h-20 w-auto mx-auto mb-4">
+                <div class="text-brand-primary text-[10px] font-black uppercase tracking-[0.2em] mb-2">Ingresso Diamante</div>
+                <h3 class="font-black text-2xl text-brand-textPrimary uppercase tracking-tight mb-2">Garanta seu Acesso VIP</h3>
+                <p class="text-sm text-brand-textSecondary">Preencha os dados abaixo para avançar ao pagamento do Ingresso Diamante.</p>
+            </div>
+
+            <form id="form-captura-diamante" class="space-y-4 mt-6 popup-form" data-checkout="https://payfast.greenn.com.br/171165?batch=14207_V8QGUc">
+                <div>
+                    <label for="lead-nome-diamante" class="block text-sm font-medium text-brand-textSecondary mb-1">Nome</label>
+                    <input type="text" id="lead-nome-diamante" name="nome" required placeholder="Seu nome completo" class="w-full px-4 py-3 rounded-lg bg-brand-bg border border-white/10 text-brand-textPrimary placeholder-brand-textMuted focus:border-brand-goldLight focus:ring-1 focus:ring-brand-goldLight outline-none transition-all duration-200 hover:border-white/25">
+                </div>
+                <div>
+                    <label for="lead-email-diamante" class="block text-sm font-medium text-brand-textSecondary mb-1">Email</label>
+                    <input type="email" id="lead-email-diamante" name="email" required placeholder="seu@email.com" class="w-full px-4 py-3 rounded-lg bg-brand-bg border border-white/10 text-brand-textPrimary placeholder-brand-textMuted focus:border-brand-goldLight focus:ring-1 focus:ring-brand-goldLight outline-none transition-all duration-200 hover:border-white/25">
+                </div>
+                <div>
+                    <label for="lead-phone-diamante" class="block text-sm font-medium text-brand-textSecondary mb-1">Telefone</label>
+                    <div class="flex rounded-lg overflow-hidden border border-white/10 focus-within:border-brand-goldLight focus-within:ring-1 focus-within:ring-brand-goldLight bg-brand-bg transition-all duration-200">
+                        <span class="inline-flex items-center px-4 py-3 bg-gradient-to-r from-brand-goldLight to-brand-goldDeep text-brand-bg font-bold select-none shrink-0">+55</span>
+                        <input type="tel" id="lead-phone-diamante" name="phone" required placeholder="(11) 99999-9999" maxlength="15" autocomplete="tel" class="flex-1 px-4 py-3 bg-transparent text-brand-textPrimary placeholder-brand-textMuted outline-none min-w-0 mask-telefone">
+                    </div>
+                    <p class="error-msg text-brand-goldLight text-xs mt-1 hidden"><i class="fas fa-exclamation-circle mr-1"></i>Informe o DDD e o número completo.</p>
+                </div>
+                <input type="hidden" name="utm_source" value="">
+                <input type="hidden" name="utm_term" value="">
+                <input type="hidden" name="utm_campaign" value="">
+                <input type="hidden" name="utm_medium" value="">
+                <input type="hidden" name="utm_content" value="">
+                <input type="hidden" name="url" value="">
                 <button type="submit" class="btn-shimmer btn-gold w-full font-sans font-bold py-4 rounded-xl uppercase tracking-widest transition-all duration-300 hover:-translate-y-0.5 btn-submit mt-2">
                     Avançar para Pagamento
                 </button>
@@ -2050,97 +2095,131 @@
             startAutoplay();
         })();
 
-        let currentCheckoutTarget = '';
+        const WEBHOOK_URL = 'https://hook.us2.make.com/6qaglponybteo2l6d187c5p91i7r1tae';
+        const popupOuro = document.getElementById('popup-captura-ouro');
+        const popupDiamante = document.getElementById('popup-captura-diamante');
 
-        const popup = document.getElementById('popup-captura');
-        function abrirPopup(targetUrl) {
-            currentCheckoutTarget = targetUrl;
-            popup.classList.remove('hidden');
-            popup.classList.add('flex');
-            popup.setAttribute('aria-hidden', 'false');
+        function abrirPopup(popupEl, formEl) {
+            preencherCamposTracking(formEl);
+            popupEl.classList.remove('hidden');
+            popupEl.classList.add('flex');
+            popupEl.setAttribute('aria-hidden', 'false');
             document.body.style.overflow = 'hidden';
         }
-        function fecharPopup() {
-            popup.classList.add('hidden');
-            popup.classList.remove('flex');
-            popup.setAttribute('aria-hidden', 'true');
-            document.body.style.overflow = '';
-        }
-        popup.addEventListener('click', (e) => { if (e.target === popup) fecharPopup(); });
-        document.addEventListener('keydown', (e) => { if (e.key === 'Escape') fecharPopup(); });
 
-        const telInput = document.getElementById('lead-phone');
-        telInput.addEventListener('input', function(e) {
-            let value = e.target.value.replace(/\D/g, '');
-            if (value.startsWith('55') && value.length > 2) value = value.slice(2);
-            value = value.slice(0, 11);
-            let formatado = value;
-            if (value.length > 2) formatado = `(${value.slice(0, 2)}) ` + value.slice(2);
-            if (value.length > 7) formatado = formatado.slice(0, 10) + '-' + formatado.slice(10);
-            e.target.value = formatado;
-            const errorMsg = document.querySelector('.error-msg');
-            if (errorMsg) errorMsg.classList.add('hidden');
+        function fecharPopup(popupEl) {
+            popupEl.classList.add('hidden');
+            popupEl.classList.remove('flex');
+            popupEl.setAttribute('aria-hidden', 'true');
+            if (!popupOuro.classList.contains('flex') && !popupDiamante.classList.contains('flex')) {
+                document.body.style.overflow = '';
+            }
+        }
+
+        function abrirPopupOuro() {
+            abrirPopup(popupOuro, document.getElementById('form-captura-ouro'));
+        }
+
+        function abrirPopupDiamante() {
+            abrirPopup(popupDiamante, document.getElementById('form-captura-diamante'));
+        }
+
+        function fecharPopupOuro() {
+            fecharPopup(popupOuro);
+        }
+
+        function fecharPopupDiamante() {
+            fecharPopup(popupDiamante);
+        }
+
+        popupOuro.addEventListener('click', (e) => { if (e.target === popupOuro) fecharPopupOuro(); });
+        popupDiamante.addEventListener('click', (e) => { if (e.target === popupDiamante) fecharPopupDiamante(); });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key !== 'Escape') return;
+            if (popupOuro.classList.contains('flex')) fecharPopupOuro();
+            if (popupDiamante.classList.contains('flex')) fecharPopupDiamante();
         });
 
-        function preencherCamposTracking() {
+        function preencherCamposTracking(form) {
             const params = new URLSearchParams(window.location.search);
             ['utm_source', 'utm_term', 'utm_campaign', 'utm_medium', 'utm_content'].forEach((campo) => {
-                const el = document.getElementById(campo);
+                const el = form.querySelector(`[name="${campo}"]`);
                 if (el) el.value = params.get(campo) || '';
             });
-            const urlEl = document.getElementById('url');
+            const urlEl = form.querySelector('[name="url"]');
             if (urlEl) urlEl.value = window.location.href;
         }
-        preencherCamposTracking();
 
-        const form = document.getElementById('form-captura-lex');
-        form.addEventListener('submit', async function(e) {
-            e.preventDefault();
-            const btnSubmit = this.querySelector('.btn-submit');
-            const errorMsg = this.querySelector('.error-msg');
-            const rawPhone = telInput.value.replace(/\D/g, '');
-            if (rawPhone.length < 10) {
-                errorMsg.classList.remove('hidden');
-                telInput.focus();
-                return;
-            }
-            btnSubmit.disabled = true;
-            btnSubmit.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Processando...';
-            const nome = document.getElementById('lead-nome').value.trim();
-            const email = document.getElementById('lead-email').value.trim();
-            const telefone = '+55' + rawPhone;
-            const payload = {
-                nome: nome,
-                email: email,
-                telefone: telefone,
-                utm_source: document.getElementById('utm_source')?.value || '',
-                utm_term: document.getElementById('utm_term')?.value || '',
-                utm_campaign: document.getElementById('utm_campaign')?.value || '',
-                utm_medium: document.getElementById('utm_medium')?.value || '',
-                utm_content: document.getElementById('utm_content')?.value || '',
-                url: document.getElementById('url')?.value || window.location.href
-            };
-            const WEBHOOK_URL = 'https://hook.us2.make.com/6qaglponybteo2l6d187c5p91i7r1tae';
-            try {
-                await fetch(WEBHOOK_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
-            } catch (error) {
-                console.error("Erro no envio do Webhook. Prosseguindo com redirect seguro.");
-            } finally {
-                const queryStringParams = new URLSearchParams();
-                queryStringParams.append('name', nome);
-                queryStringParams.append('email', email);
-                queryStringParams.append('telefone', telefone);
-                queryStringParams.append('utm_source', document.getElementById('utm_source')?.value || '');
-                queryStringParams.append('utm_term', document.getElementById('utm_term')?.value || '');
-                queryStringParams.append('utm_campaign', document.getElementById('utm_campaign')?.value || '');
-                queryStringParams.append('utm_medium', document.getElementById('utm_medium')?.value || '');
-                queryStringParams.append('utm_content', document.getElementById('utm_content')?.value || '');
-                queryStringParams.append('url', document.getElementById('url')?.value || window.location.href);
-                const checkUrl = new URL(currentCheckoutTarget);
-                const finalUrl = checkUrl.origin + checkUrl.pathname + '?' + checkUrl.searchParams.toString() + '&' + queryStringParams.toString();
-                window.location.href = finalUrl;
-            }
-        });
+        function initMascaraTelefone(input, form) {
+            input.addEventListener('input', function(e) {
+                let value = e.target.value.replace(/\D/g, '');
+                if (value.startsWith('55') && value.length > 2) value = value.slice(2);
+                value = value.slice(0, 11);
+                let formatado = value;
+                if (value.length > 2) formatado = `(${value.slice(0, 2)}) ` + value.slice(2);
+                if (value.length > 7) formatado = formatado.slice(0, 10) + '-' + formatado.slice(10);
+                e.target.value = formatado;
+                const errorMsg = form.querySelector('.error-msg');
+                if (errorMsg) errorMsg.classList.add('hidden');
+            });
+        }
+
+        function initFormCaptura(form) {
+            const telInput = form.querySelector('.mask-telefone');
+            initMascaraTelefone(telInput, form);
+
+            form.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                const btnSubmit = form.querySelector('.btn-submit');
+                const errorMsg = form.querySelector('.error-msg');
+                const checkoutTarget = form.dataset.checkout;
+                const rawPhone = telInput.value.replace(/\D/g, '');
+                if (rawPhone.length < 10) {
+                    errorMsg.classList.remove('hidden');
+                    telInput.focus();
+                    return;
+                }
+                btnSubmit.disabled = true;
+                btnSubmit.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Processando...';
+                const nome = form.querySelector('[name="nome"]').value.trim();
+                const email = form.querySelector('[name="email"]').value.trim();
+                const telefone = '+55' + rawPhone;
+                const payload = {
+                    nome: nome,
+                    email: email,
+                    telefone: telefone,
+                    utm_source: form.querySelector('[name="utm_source"]')?.value || '',
+                    utm_term: form.querySelector('[name="utm_term"]')?.value || '',
+                    utm_campaign: form.querySelector('[name="utm_campaign"]')?.value || '',
+                    utm_medium: form.querySelector('[name="utm_medium"]')?.value || '',
+                    utm_content: form.querySelector('[name="utm_content"]')?.value || '',
+                    url: form.querySelector('[name="url"]')?.value || window.location.href
+                };
+                try {
+                    await fetch(WEBHOOK_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+                } catch (error) {
+                    console.error('Erro no envio do Webhook. Prosseguindo com redirect seguro.');
+                } finally {
+                    const queryStringParams = new URLSearchParams();
+                    queryStringParams.append('name', nome);
+                    queryStringParams.append('email', email);
+                    queryStringParams.append('telefone', telefone);
+                    queryStringParams.append('utm_source', form.querySelector('[name="utm_source"]')?.value || '');
+                    queryStringParams.append('utm_term', form.querySelector('[name="utm_term"]')?.value || '');
+                    queryStringParams.append('utm_campaign', form.querySelector('[name="utm_campaign"]')?.value || '');
+                    queryStringParams.append('utm_medium', form.querySelector('[name="utm_medium"]')?.value || '');
+                    queryStringParams.append('utm_content', form.querySelector('[name="utm_content"]')?.value || '');
+                    queryStringParams.append('url', form.querySelector('[name="url"]')?.value || window.location.href);
+                    const checkUrl = new URL(checkoutTarget);
+                    const finalUrl = checkUrl.origin + checkUrl.pathname + '?' + checkUrl.searchParams.toString() + '&' + queryStringParams.toString();
+                    window.location.href = finalUrl;
+                }
+            });
+        }
+
+        initFormCaptura(document.getElementById('form-captura-ouro'));
+        initFormCaptura(document.getElementById('form-captura-diamante'));
     </script>
 </body>
 </html>
