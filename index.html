@@ -65,9 +65,37 @@
     <link rel="stylesheet" href="assets/fonts/fonts.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <link rel="icon" href="assets/asset 0.png" type="image/png">
+    <link rel="icon" href="assets/111.webp" type="image/webp">
 
     <style>
+        html {
+            scrollbar-width: thin;
+            scrollbar-color: #A38846 #050506;
+        }
+
+        ::-webkit-scrollbar {
+            width: 10px;
+            height: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #050506;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, #E2BE7C 0%, #A38846 55%, #704323 100%);
+            border-radius: 9999px;
+            border: 2px solid #050506;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(180deg, #FDFEFE 0%, #E2BE7C 50%, #A38846 100%);
+        }
+
+        ::-webkit-scrollbar-corner {
+            background: #050506;
+        }
+
         h1, h2, h3, h4 {
             font-family: 'Avant Ique', 'Nova Pro', sans-serif;
         }
@@ -682,6 +710,37 @@
             transform: translateY(-2px);
         }
 
+        .hero-bg-img {
+            opacity: 0.95;
+            object-position: 72% 28%;
+            filter: brightness(1.12) contrast(1.04) saturate(1.05);
+        }
+
+        @media (min-width: 768px) {
+            .hero-bg-img {
+                object-position: 78% 22%;
+            }
+        }
+
+        .hero-overlay-left {
+            background: linear-gradient(
+                to right,
+                rgba(5, 5, 6, 0.88) 0%,
+                rgba(5, 5, 6, 0.62) 38%,
+                rgba(5, 5, 6, 0.18) 68%,
+                rgba(5, 5, 6, 0.05) 100%
+            );
+        }
+
+        .hero-overlay-bottom {
+            background: linear-gradient(
+                to top,
+                rgba(5, 5, 6, 0.75) 0%,
+                rgba(5, 5, 6, 0.2) 35%,
+                transparent 65%
+            );
+        }
+
         /* ─── Qualificação (É / Não é) ─── */
         .qualify-section {
             background:
@@ -953,6 +1012,149 @@
             border-image: linear-gradient(90deg, transparent, rgba(226, 190, 124, 0.25), transparent) 1;
         }
 
+        /* ─── Seção vídeo ─── */
+        .video-section {
+            background:
+                radial-gradient(ellipse 55% 45% at 50% 0%, rgba(226, 190, 124, 0.09) 0%, transparent 55%),
+                #19191B;
+        }
+
+        .video-frame {
+            position: relative;
+            max-width: 56rem;
+            margin: 0 auto;
+            padding: 2px;
+            border-radius: 1.25rem;
+            background: linear-gradient(135deg, rgba(226, 190, 124, 0.55), rgba(112, 67, 35, 0.35) 50%, rgba(163, 136, 70, 0.5));
+            box-shadow:
+                0 28px 70px rgba(0, 0, 0, 0.45),
+                0 0 50px rgba(226, 190, 124, 0.07);
+            transition: box-shadow 0.4s ease, transform 0.4s ease;
+        }
+
+        .video-frame:hover {
+            box-shadow:
+                0 32px 80px rgba(0, 0, 0, 0.5),
+                0 0 60px rgba(226, 190, 124, 0.12);
+            transform: translateY(-4px);
+        }
+
+        .video-frame-inner {
+            position: relative;
+            border-radius: 1.125rem;
+            overflow: hidden;
+            background: #050506;
+            aspect-ratio: 16 / 9;
+        }
+
+        .video-poster {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            border: none;
+            cursor: pointer;
+            background: #050506;
+        }
+
+        .video-poster-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.6s ease;
+        }
+
+        .video-poster:hover .video-poster-img {
+            transform: scale(1.03);
+        }
+
+        .video-poster-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(5, 5, 6, 0.55) 0%, rgba(5, 5, 6, 0.12) 50%, rgba(5, 5, 6, 0.2) 100%);
+            transition: background 0.35s ease;
+        }
+
+        .video-poster:hover .video-poster-overlay {
+            background: linear-gradient(to top, rgba(5, 5, 6, 0.45) 0%, rgba(5, 5, 6, 0.05) 50%, rgba(5, 5, 6, 0.12) 100%);
+        }
+
+        .video-play-ring {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 5.75rem;
+            height: 5.75rem;
+            border-radius: 50%;
+            border: 1px solid rgba(226, 190, 124, 0.35);
+            opacity: 0.7;
+            transition: transform 0.45s ease, opacity 0.35s ease;
+            pointer-events: none;
+        }
+
+        .video-poster:hover .video-play-ring {
+            transform: translate(-50%, -50%) scale(1.15);
+            opacity: 1;
+        }
+
+        .video-play-btn {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 5rem;
+            height: 5rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(145deg, rgba(226, 190, 124, 0.95) 0%, rgba(163, 136, 70, 0.95) 100%);
+            color: #050506;
+            font-size: 1.25rem;
+            padding-left: 0.25rem;
+            box-shadow:
+                0 12px 40px rgba(0, 0, 0, 0.45),
+                0 0 0 6px rgba(226, 190, 124, 0.15);
+            transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.35s ease;
+            pointer-events: none;
+        }
+
+        .video-poster:hover .video-play-btn {
+            transform: translate(-50%, -50%) scale(1.1);
+            box-shadow:
+                0 16px 48px rgba(0, 0, 0, 0.5),
+                0 0 0 10px rgba(226, 190, 124, 0.2);
+        }
+
+        @media (min-width: 768px) {
+            .video-play-ring {
+                width: 7rem;
+                height: 7rem;
+            }
+            .video-play-btn {
+                width: 5.75rem;
+                height: 5.75rem;
+                font-size: 1.4rem;
+            }
+        }
+
+        .video-embed {
+            position: absolute;
+            inset: 0;
+        }
+
+        .video-embed iframe {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
         /* AOS: deslocamento horizontal mais perceptível */
         [data-aos="fade-right"] {
             transform: translate3d(-60px, 0, 0);
@@ -971,15 +1173,15 @@
     <!-- ─── HERO ─── -->
     <header id="hero" class="relative min-h-screen flex items-center pt-24 pb-16 md:pt-36 overflow-hidden">
         <div class="absolute inset-0 z-0">
-            <img src="assets/asset 38.webp" alt="" class="w-full h-full object-cover object-center opacity-60" loading="eager">
-            <div class="absolute inset-0 bg-gradient-to-r from-brand-bg/90 via-brand-bg/50 to-brand-bg/20"></div>
-            <div class="absolute inset-0 bg-gradient-to-t from-brand-bg via-brand-bg/35 to-transparent"></div>
+            <img src="assets/hero-bg.webp" alt="" class="hero-bg-img w-full h-full object-cover" loading="eager">
+            <div class="absolute inset-0 hero-overlay-left"></div>
+            <div class="absolute inset-0 hero-overlay-bottom"></div>
         </div>
         <div class="absolute top-1/4 -left-32 w-96 h-96 bg-brand-primary/10 rounded-full blur-[120px] pointer-events-none z-0"></div>
 
         <div class="container mx-auto px-6 relative z-10 max-w-content text-center md:text-left">
             <div data-aos="fade-right">
-                <img src="assets/asset 0.png" alt="LEX, O Líder Exponencial" class="h-24 md:h-32 w-auto mx-auto md:mx-0 mb-10">
+                <img src="assets/111.webp" alt="LEX, O Líder Exponencial" class="h-24 md:h-32 w-auto mx-auto md:mx-0 mb-10">
 
                 <h1 class="text-3xl md:text-5xl lg:text-6xl font-bold leading-[1.12] text-brand-textPrimary mb-6 tracking-tight">
                     Seu negócio é bom demais <br class="hidden md:block"> para continuar sendo o <br class="hidden md:block">
@@ -1022,6 +1224,35 @@
             </div>
         </div>
     </header>
+
+    <!-- ─── VÍDEO ─── -->
+    <section id="video" class="video-section py-24 md:py-28 relative overflow-hidden border-b border-white/5">
+        <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-brand-goldLight/5 rounded-full blur-[120px] pointer-events-none"></div>
+
+        <div class="container mx-auto px-6 max-w-content relative z-10">
+            <div class="text-center max-w-3xl mx-auto mb-12 md:mb-14">
+                <p class="section-eyebrow section-eyebrow--gold" data-aos="fade-up">Assista agora</p>
+                <h2 class="text-3xl md:text-5xl font-black text-brand-textPrimary leading-tight mb-5" data-aos="fade-right" data-aos-delay="100">
+                    Entenda em poucos minutos o que é a <span class="title-accent">Imersão LEX</span>
+                </h2>
+                <p class="text-brand-textSecondary text-lg leading-relaxed" data-aos="fade-left" data-aos-delay="200">
+                    Antes de garantir sua vaga, veja como dois dias presenciais podem reposicionar a sua liderança e colocar o seu negócio no radar do mercado.
+                </p>
+            </div>
+
+            <div class="video-frame" data-aos="fade-up" data-aos-delay="250">
+                <div class="video-frame-inner" id="video-player">
+                    <button type="button" class="video-poster" id="video-poster" aria-label="Reproduzir vídeo da Imersão LEX">
+                        <img src="assets/asset 39.webp" alt="" class="video-poster-img" loading="lazy">
+                        <span class="video-poster-overlay" aria-hidden="true"></span>
+                        <span class="video-play-ring" aria-hidden="true"></span>
+                        <span class="video-play-btn" aria-hidden="true"><i class="fas fa-play"></i></span>
+                    </button>
+                    <div class="video-embed hidden" id="video-embed"></div>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <!-- ─── O TETO ─── -->
     <section id="problema" class="py-24 bg-brand-surface relative overflow-hidden border-y border-white/5">
@@ -1535,7 +1766,7 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 mb-12">
                 <div class="lg:col-span-4 space-y-4">
                     <a href="#hero" class="inline-block hover:opacity-90 transition-opacity duration-300 mb-4">
-                        <img src="assets/asset 0.png" alt="LEX, O Líder Exponencial" class="h-16 md:h-20 w-auto">
+                        <img src="assets/ativo-7.svg" alt="LEX, O Líder Exponencial" class="h-16 md:h-20 w-auto">
                     </a>
                     <p class="text-brand-textSecondary text-sm leading-relaxed max-w-sm">
                         O destravamento que vem antes da expansão. Uma imersão exclusiva para líderes que desejam assumir a cadeira de comando com autoridade inquestionável.
@@ -1544,6 +1775,7 @@
                 <div class="lg:col-span-2 lg:col-start-7">
                     <h4 class="text-brand-textPrimary font-bold uppercase tracking-widest text-xs mb-6">Navegação</h4>
                     <ul class="space-y-3 text-sm text-brand-textSecondary">
+                        <li><a href="#video" class="link-ul hover:text-brand-goldLight transition-colors duration-200">Vídeo</a></li>
                         <li><a href="#galeria" class="link-ul hover:text-brand-goldLight transition-colors duration-200">Experiência</a></li>
                         <li><a href="#metodo" class="link-ul hover:text-brand-goldLight transition-colors duration-200">A Imersão</a></li>
                         <li><a href="#problema" class="link-ul hover:text-brand-goldLight transition-colors duration-200">A Dor</a></li>
@@ -1589,7 +1821,7 @@
             </button>
 
             <div class="text-center mb-8">
-                <img src="assets/asset 0.png" alt="LEX" class="h-16 md:h-20 w-auto mx-auto mb-4">
+                <img src="assets/111.webp" alt="LEX" class="h-16 md:h-20 w-auto mx-auto mb-4">
                 <div class="text-brand-primary text-[10px] font-black uppercase tracking-[0.2em] mb-2">Acesso Exclusivo</div>
                 <h3 class="font-black text-2xl text-brand-textPrimary uppercase tracking-tight mb-2">Garanta sua Vaga</h3>
                 <p class="text-sm text-brand-textSecondary">Preencha os dados abaixo para avançar ao pagamento oficial.</p>
@@ -1629,12 +1861,23 @@
     <script>
         AOS.init({ once: true, offset: 80, duration: 900, easing: 'ease-out-cubic' });
 
+        (function initVideoPoster() {
+            const poster = document.getElementById('video-poster');
+            const embed = document.getElementById('video-embed');
+            if (!poster || !embed) return;
+
+            poster.addEventListener('click', function() {
+                embed.innerHTML = `<iframe src="https://www.youtube.com/embed/3CiXBcMajsg?autoplay=1&rel=0&modestbranding=1" title="Imersão LEX — vídeo de apresentação" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>`;
+                embed.classList.remove('hidden');
+                poster.remove();
+            });
+        })();
+
         const GALLERY_IMAGES = [
             'assets/asset 1.webp', 'assets/asset 2.webp', 'assets/asset 3.webp', 'assets/asset 4.webp',
             'assets/asset 5.webp', 'assets/asset 6.webp', 'assets/asset 7.webp', 'assets/asset 8.webp',
             'assets/asset 9.webp', 'assets/asset 10.webp', 'assets/asset 11.webp', 'assets/asset 12.webp',
-            'assets/asset 13.webp', 'assets/asset 14.webp', 'assets/asset 15.webp', 'assets/asset 16.webp',
-            'assets/asset 38.webp', 'assets/asset 39.webp'
+            'assets/asset 13.webp', 'assets/asset 14.webp', 'assets/asset 15.webp', 'assets/asset 16.webp'
         ];
 
         function buildMarqueeRow(containerId, images, reverse) {
