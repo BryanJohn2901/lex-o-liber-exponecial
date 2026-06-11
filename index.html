@@ -32,7 +32,7 @@
                     },
                     fontFamily: {
                         sans: ['Nova Pro', 'ui-sans-serif', 'system-ui', 'sans-serif'],
-                        display: ['Avant Ique', 'Nova Pro', 'sans-serif'],
+                        display: ['Avantique', 'sans-serif'],
                     },
                     animation: {
                         'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
@@ -62,6 +62,8 @@
         }
     </script>
 
+    <link rel="preload" href="assets/fonts/avant-ique-corporate-logo-geometric-grotesk-font-2026-04-07-06-16-08-utc/Avantique%20Main%20Files/WOFF2/Avantique-Bold.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="assets/fonts/nova-pro-2026-04-07-06-13-42-utc/NovaPro_EE/NovaPro-Regular.otf" as="font" type="font/otf" crossorigin>
     <link rel="stylesheet" href="assets/fonts/fonts.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
@@ -96,8 +98,25 @@
             background: #050506;
         }
 
+        body {
+            font-family: 'Nova Pro', ui-sans-serif, system-ui, sans-serif;
+            font-weight: 400;
+        }
+
         h1, h2, h3, h4 {
-            font-family: 'Avant Ique', 'Nova Pro', sans-serif;
+            font-family: 'Avantique', sans-serif;
+            font-weight: 700;
+        }
+
+        .hero-title {
+            font-family: 'Avantique', sans-serif;
+            font-weight: 700;
+            font-synthesis: none;
+        }
+
+        .hero-title span {
+            font-family: inherit;
+            font-weight: inherit;
         }
 
         .marquee-mask {
@@ -593,9 +612,9 @@
         }
 
         .pricing-price-value {
-            font-family: 'Avant Ique', 'Nova Pro', sans-serif;
+            font-family: 'Avantique', sans-serif;
             font-size: clamp(2.25rem, 5vw, 3rem);
-            font-weight: 800;
+            font-weight: 700;
             line-height: 1;
             letter-spacing: -0.02em;
         }
@@ -1225,7 +1244,7 @@
             <div data-aos="fade-right">
                 <img src="assets/111.webp" alt="LEX, O Líder Exponencial" class="h-24 md:h-32 w-auto mx-auto md:mx-0 mb-10">
 
-                <h1 class="text-3xl md:text-5xl lg:text-6xl font-bold leading-[1.12] text-brand-textPrimary mb-6 tracking-tight">
+                <h1 class="hero-title font-display text-3xl md:text-5xl lg:text-6xl font-bold leading-[1.12] text-brand-textPrimary mb-6 tracking-tight">
                     Seu negócio é bom demais <br class="hidden md:block"> para continuar sendo o <br class="hidden md:block">
                     <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-goldLight to-brand-goldDeep">segredo mais bem guardado</span> <br class="hidden md:block"> do seu mercado.
                 </h1>
@@ -2165,16 +2184,35 @@
             });
         }
 
+        function buildCheckoutRedirectUrl(checkoutTarget, form, nome, email, telefone, telefoneFormatado) {
+            const url = new URL(checkoutTarget);
+
+            url.searchParams.set('fn', nome);
+            url.searchParams.set('em', email);
+            url.searchParams.set('ph', telefoneFormatado);
+            url.searchParams.set('name', nome);
+            url.searchParams.set('email', email);
+            url.searchParams.set('telefone', telefone);
+
+            ['utm_source', 'utm_term', 'utm_campaign', 'utm_medium', 'utm_content'].forEach((campo) => {
+                url.searchParams.set(campo, form.querySelector(`[name="${campo}"]`)?.value || '');
+            });
+            url.searchParams.set('url', form.querySelector('[name="url"]')?.value || window.location.href);
+
+            return url.toString();
+        }
+
         function initFormCaptura(form) {
             const telInput = form.querySelector('.mask-telefone');
             initMascaraTelefone(telInput, form);
 
-            form.addEventListener('submit', async function(e) {
+            form.addEventListener('submit', function(e) {
                 e.preventDefault();
                 const btnSubmit = form.querySelector('.btn-submit');
                 const errorMsg = form.querySelector('.error-msg');
                 const checkoutTarget = form.dataset.checkout;
-                const rawPhone = telInput.value.replace(/\D/g, '');
+                const telefoneFormatado = telInput.value.trim();
+                const rawPhone = telefoneFormatado.replace(/\D/g, '');
                 if (rawPhone.length < 10) {
                     errorMsg.classList.remove('hidden');
                     telInput.focus();
@@ -2196,25 +2234,18 @@
                     utm_content: form.querySelector('[name="utm_content"]')?.value || '',
                     url: form.querySelector('[name="url"]')?.value || window.location.href
                 };
-                try {
-                    await fetch(WEBHOOK_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
-                } catch (error) {
-                    console.error('Erro no envio do Webhook. Prosseguindo com redirect seguro.');
-                } finally {
-                    const queryStringParams = new URLSearchParams();
-                    queryStringParams.append('name', nome);
-                    queryStringParams.append('email', email);
-                    queryStringParams.append('telefone', telefone);
-                    queryStringParams.append('utm_source', form.querySelector('[name="utm_source"]')?.value || '');
-                    queryStringParams.append('utm_term', form.querySelector('[name="utm_term"]')?.value || '');
-                    queryStringParams.append('utm_campaign', form.querySelector('[name="utm_campaign"]')?.value || '');
-                    queryStringParams.append('utm_medium', form.querySelector('[name="utm_medium"]')?.value || '');
-                    queryStringParams.append('utm_content', form.querySelector('[name="utm_content"]')?.value || '');
-                    queryStringParams.append('url', form.querySelector('[name="url"]')?.value || window.location.href);
-                    const checkUrl = new URL(checkoutTarget);
-                    const finalUrl = checkUrl.origin + checkUrl.pathname + '?' + checkUrl.searchParams.toString() + '&' + queryStringParams.toString();
-                    window.location.href = finalUrl;
-                }
+                const finalUrl = buildCheckoutRedirectUrl(checkoutTarget, form, nome, email, telefone, telefoneFormatado);
+
+                fetch(WEBHOOK_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload),
+                    keepalive: true
+                }).catch((error) => {
+                    console.error('Erro no envio do Webhook. Prosseguindo com redirect seguro.', error);
+                });
+
+                window.location.href = finalUrl;
             });
         }
 
