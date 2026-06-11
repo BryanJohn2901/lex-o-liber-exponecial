@@ -722,6 +722,42 @@
             }
         }
 
+        .hero-mobile-visual {
+            position: relative;
+            width: 100%;
+            flex-shrink: 0;
+            background: #131313;
+        }
+
+        .hero-mobile-visual img {
+            width: 100%;
+            display: block;
+            min-height: 16rem;
+            max-height: 52vh;
+            object-fit: cover;
+            object-position: center top;
+        }
+
+        .hero-mobile-fade {
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            height: 55%;
+            background: linear-gradient(to bottom, transparent 0%, rgba(19, 19, 19, 0.35) 45%, #131313 100%);
+            pointer-events: none;
+        }
+
+        .hero-content {
+            background: #131313;
+        }
+
+        @media (min-width: 768px) {
+            .hero-content {
+                background: transparent;
+            }
+        }
+
         .hero-overlay-left {
             background: linear-gradient(
                 to right,
@@ -1171,15 +1207,21 @@
 <body class="bg-brand-bg text-brand-textPrimary font-sans antialiased selection:bg-brand-goldLight selection:text-brand-bg">
 
     <!-- ─── HERO ─── -->
-    <header id="hero" class="relative min-h-screen flex items-center pt-24 pb-16 md:pt-36 overflow-hidden">
-        <div class="absolute inset-0 z-0">
+    <header id="hero" class="relative overflow-hidden md:min-h-screen md:flex md:items-center md:pt-36 md:pb-16">
+        <div class="hero-bg-desktop hidden md:block absolute inset-0 z-0">
             <img src="assets/hero-bg.webp" alt="" class="hero-bg-img w-full h-full object-cover" loading="eager">
             <div class="absolute inset-0 hero-overlay-left"></div>
             <div class="absolute inset-0 hero-overlay-bottom"></div>
         </div>
-        <div class="absolute top-1/4 -left-32 w-96 h-96 bg-brand-primary/10 rounded-full blur-[120px] pointer-events-none z-0"></div>
+        <div class="hidden md:block absolute top-1/4 -left-32 w-96 h-96 bg-brand-primary/10 rounded-full blur-[120px] pointer-events-none z-0"></div>
 
-        <div class="container mx-auto px-6 relative z-10 max-w-content text-center md:text-left">
+        <div class="hero-mobile-visual md:hidden">
+            <img src="assets/hero-bg-mobile.webp" alt="" loading="eager">
+            <div class="hero-mobile-fade" aria-hidden="true"></div>
+        </div>
+
+        <div class="hero-content relative z-10 w-full pt-8 pb-12 md:pt-0 md:pb-0">
+        <div class="container mx-auto px-6 max-w-content text-center md:text-left">
             <div data-aos="fade-right">
                 <img src="assets/111.webp" alt="LEX, O Líder Exponencial" class="h-24 md:h-32 w-auto mx-auto md:mx-0 mb-10">
 
@@ -1222,6 +1264,7 @@
                     </div>
                 </div>
             </div>
+        </div>
         </div>
     </header>
 
