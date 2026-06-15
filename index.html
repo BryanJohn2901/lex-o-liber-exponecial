@@ -253,8 +253,82 @@
         }
 
         .depoimentos-dot.is-active {
-            background: #E2BE7C;
             width: 1.5rem;
+            background: #E2BE7C;
+            transform: scale(1.05);
+        }
+
+        .depoimentos-videos-band {
+            background: #C5A367;
+            border-radius: 1.5rem 1.5rem 1rem 1rem;
+            padding: 2.5rem 1.5rem 2.75rem;
+            margin-top: 2rem;
+            margin-bottom: 3.5rem;
+        }
+
+        @media (min-width: 768px) {
+            .depoimentos-videos-band {
+                padding: 3rem 2.5rem 3.25rem;
+                margin-top: 2.5rem;
+                margin-bottom: 4rem;
+            }
+        }
+
+        .depoimentos-videos-title {
+            text-align: center;
+            font-family: 'Avantique', 'Nova Pro', sans-serif;
+            font-size: clamp(1.35rem, 3vw, 1.75rem);
+            font-weight: 700;
+            color: #FDFEFE;
+            margin: 0 0 2rem;
+            letter-spacing: 0.01em;
+        }
+
+        @media (min-width: 768px) {
+            .depoimentos-videos-title {
+                margin-bottom: 2.5rem;
+            }
+        }
+
+        .depoimentos-videos-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+            max-width: 52rem;
+            margin: 0 auto;
+        }
+
+        @media (min-width: 768px) {
+            .depoimentos-videos-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 1.75rem;
+            }
+        }
+
+        .depoimento-video-frame {
+            position: relative;
+            width: 100%;
+            max-width: 14rem;
+            margin: 0 auto;
+            aspect-ratio: 9 / 16;
+            border-radius: 1rem;
+            overflow: hidden;
+            background: #000;
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.22);
+        }
+
+        @media (min-width: 768px) {
+            .depoimento-video-frame {
+                max-width: none;
+            }
+        }
+
+        .depoimento-video-frame iframe {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
         }
 
         .glass-strong {
@@ -1283,6 +1357,7 @@
                         <div class="text-left">
                             <p class="text-[10px] uppercase tracking-widest text-brand-textMuted font-bold">Data Oficial</p>
                             <p class="text-sm font-semibold text-brand-textPrimary">08 e 09 de Agosto de 2026</p>
+                            <p class="text-xs text-brand-textSecondary mt-0.5">2 dias de evento presencial</p>
                         </div>
                     </div>
                     <div class="hero-info-pill flex items-center gap-4 group" data-aos="fade-up" data-aos-delay="300">
@@ -1296,7 +1371,7 @@
                         <i class="fas fa-map-marker-alt text-brand-primary text-2xl transition-transform duration-300 group-hover:scale-110 group-hover:text-brand-goldDeep"></i>
                         <div class="text-left">
                             <p class="text-[10px] uppercase tracking-widest text-brand-textMuted font-bold">Local</p>
-                            <p class="text-sm font-semibold text-brand-textPrimary">Plataforma Global, Barueri/SP</p>
+                            <p class="text-sm font-semibold text-brand-textPrimary">Alphaville, São Paulo</p>
                         </div>
                     </div>
                 </div>
@@ -1411,7 +1486,7 @@
             <div class="grid md:grid-cols-2 gap-12 items-center">
                 <div class="space-y-6 text-brand-textPrimary/90 text-lg leading-relaxed" data-aos="fade-right" data-aos-delay="200">
                     <p>A maioria dos cursos te entrega mais técnica. O LEX trabalha o que nenhuma técnica resolve: a postura de quem decide sentar na cadeira de comando e ser a face do próprio negócio.</p>
-                    <p>Em dois dias de imersão presencial, o foco é romper os padrões internos que impedem empresários competentes de ocuparem o espaço de autoridade que o mercado já está pedindo.</p>
+                    <p>Em dois dias de evento presencial, o foco é romper os padrões internos que impedem empresários competentes de ocuparem o espaço de autoridade que o mercado já está pedindo.</p>
                     <p>O resultado não é "vender mais". É vender melhor, para o cliente certo, porque a sua marca pessoal passa a fazer o trabalho de convencimento antes de qualquer reunião.</p>
                 </div>
 
@@ -1623,8 +1698,30 @@
             </div>
 
             <div class="pt-12 border-t border-white/10">
-                <h3 class="text-2xl md:text-4xl font-black text-brand-textPrimary mb-2" data-aos="fade-right">Quem participou <span class="text-brand-primary">não se arrepende.</span></h3>
-                <p class="text-brand-textSecondary mb-12" data-aos="fade-left" data-aos-delay="100">Depoimentos reais de empresários que viveram a imersão:</p>
+                <h3 class="text-2xl md:text-4xl font-black text-brand-textPrimary mb-0" data-aos="fade-right">Quem participou <span class="text-brand-primary">não se arrepende.</span></h3>
+
+                <div class="depoimentos-videos-band" data-aos="fade-up" data-aos-delay="100">
+                    <h4 class="depoimentos-videos-title">Veja o que dizem:</h4>
+                    <div class="depoimentos-videos-grid">
+                        <div class="depoimento-video">
+                            <div class="depoimento-video-frame">
+                                <iframe src="https://www.youtube.com/embed/-NsG6hW95tY" title="Depoimento LEX" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+                            </div>
+                        </div>
+                        <div class="depoimento-video">
+                            <div class="depoimento-video-frame">
+                                <iframe src="https://www.youtube.com/embed/rxhqrHWCw6Q" title="Depoimento LEX Jaqueline M" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+                            </div>
+                        </div>
+                        <div class="depoimento-video">
+                            <div class="depoimento-video-frame">
+                                <iframe src="https://www.youtube.com/embed/BnV7k5wxYoQ" title="Depoimento LEX" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <p class="text-brand-textSecondary mb-12 mt-0" data-aos="fade-left" data-aos-delay="150">Depoimentos reais de empresários que viveram a imersão:</p>
 
                 <div class="depoimentos-carousel" id="depoimentos-carousel" data-aos="fade-up" data-aos-delay="200">
                     <button type="button" class="depoimentos-nav depoimentos-nav--prev" id="depoimentos-prev" aria-label="Depoimento anterior">
@@ -1703,7 +1800,7 @@
                     Garanta seu <span class="title-accent">lugar.</span>
                 </h2>
                 <p class="text-brand-textSecondary text-lg max-w-2xl mx-auto leading-relaxed" data-aos="fade-right" data-aos-delay="200">
-                    O LEX acontece em formato presencial e fechado, em Alphaville. Vagas limitadas para preservar a qualidade das dinâmicas. Sem replay.
+                    Imersão presencial de 2 dias em Alphaville. Vagas limitadas para preservar a qualidade das dinâmicas. Sem replay.
                 </p>
             </div>
 
@@ -1721,7 +1818,7 @@
                         <ul class="pricing-features mb-2">
                             <li class="pricing-feature">
                                 <span class="pricing-feature-icon"><i class="fas fa-check"></i></span>
-                                <span>11 horas de imersão presencial e aplicável</span>
+                                <span>2 dias de evento presencial e aplicável</span>
                             </li>
                             <li class="pricing-feature">
                                 <span class="pricing-feature-icon"><i class="fas fa-check"></i></span>
