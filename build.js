@@ -20,8 +20,52 @@ const OG_IMAGE = `${CANONICAL_URL}assets/lex-icon.webp`;
 const FONT_FILES = [
   'fonts/nova-pro-2026-04-07-06-13-42-utc/NovaPro_EE/NovaPro-Regular.otf',
   'fonts/nova-pro-2026-04-07-06-13-42-utc/NovaPro_EE/NovaPro-Bold.otf',
+  'fonts/avant-ique-corporate-logo-geometric-grotesk-font-2026-04-07-06-16-08-utc/Avantique Main Files/WOFF2/Avantique-Bold.woff2',
   'fonts/avant-ique-corporate-logo-geometric-grotesk-font-2026-04-07-06-16-08-utc/Avantique Main Files/WOFF2/Avantique-Semibold.woff2',
 ];
+
+function collectReferencedAssets(html) {
+  const paths = new Set();
+  const regex = /assets\/[A-Za-z0-9._\-]+\.(?:webp|svg)/gi;
+  let match;
+  while ((match = regex.exec(html)) !== null) {
+    paths.add(match[0]);
+  }
+  return [...paths];
+}
+
+function resolveAssetSource(assetRef) {
+  const assetsSrc = path.join(ROOT, 'assets');
+  const relative = assetRef.replace(/^assets\//, '');
+  const candidates = [
+    path.join(assetsSrc, relative),
+    path.join(assetsSrc, relative.replace(/asset-(\d+)/g, 'asset $1')),
+    path.join(assetsSrc, relative.replace(/-/g, ' ')),
+  ];
+
+  for (const candidate of candidates) {
+    if (fs.existsSync(candidate)) return candidate;
+  }
+
+  const parsed = path.parse(relative);
+  if (parsed.ext === '.webp') {
+    for (const ext of ['.webp', '.jpeg', '.jpg', '.png']) {
+      const alt = path.join(assetsSrc, `${parsed.name}${ext}`);
+      if (fs.existsSync(alt)) return alt;
+      const spaced = path.join(assetsSrc, `${parsed.name.replace(/-/g, ' ')}${ext}`);
+      if (fs.existsSync(spaced)) return spaced;
+    }
+  }
+
+  return null;
+}
+
+function assertReferencedAssets(html) {
+  const missing = collectReferencedAssets(html).filter((ref) => !resolveAssetSource(ref));
+  if (missing.length) {
+    throw new Error(`Assets referenciados ausentes: ${missing.join(', ')}`);
+  }
+}
 
 function log(step, message) {
   console.log(`[build] ${step}: ${message}`);
@@ -151,8 +195,8 @@ function buildFontsCss() {
 
 @font-face {
     font-family: 'Avantique';
-    src: url('../assets/fonts/avant-ique-corporate-logo-geometric-grotesk-font-2026-04-07-06-16-08-utc/Avantique%20Main%20Files/WOFF2/Avantique-Semibold.woff2') format('woff2');
-    font-weight: 600 900;
+    src: url('../assets/fonts/avant-ique-corporate-logo-geometric-grotesk-font-2026-04-07-06-16-08-utc/Avantique%20Main%20Files/WOFF2/Avantique-Bold.woff2') format('woff2');
+    font-weight: 700 900;
     font-style: normal;
     font-display: swap;
 }
@@ -167,7 +211,7 @@ function buildFontsCss() {
 `;
 }
 
-async function copyAssets() {
+async function copyAssets(html) {
   const assetsSrc = path.join(ROOT, 'assets');
   const assetsDest = path.join(DIST, 'assets');
   ensureDir(assetsDest);
@@ -180,45 +224,45 @@ async function copyAssets() {
     sharp = null;
   }
 
-  async function walkAndCopy(relativeDir = '') {
-    const currentSrc = path.join(assetsSrc, relativeDir);
-    if (!fs.existsSync(currentSrc)) return;
+  const referenced = collectReferencedAssets(html);
+  log('assets', `${referenced.length} arquivos referenciados`);
 
-    for (const entry of fs.readdirSync(currentSrc, { withFileTypes: true })) {
-      if (entry.name === '__MACOSX' || entry.name.startsWith('.')) continue;
+  for (const assetRef of referenced) {
+    const srcPath = resolveAssetSource(assetRef);
+    if (!srcPath) {
+      throw new Error(`Asset não encontrado: ${assetRef}`);
+    }
 
-      const relPath = path.join(relativeDir, entry.name);
-      const srcPath = path.join(assetsSrc, relPath);
-      const destPath = path.join(assetsDest, relPath);
+    const relativeDest = assetRef.replace(/^assets\//, '');
+    const ext = path.extname(srcPath).toLowerCase();
+    const destPath = path.join(assetsDest, relativeDest);
+    ensureDir(path.dirname(destPath));
 
-      if (entry.isDirectory()) {
-        if (relativeDir === '' && entry.name === 'fonts') continue;
-        ensureDir(destPath);
-        await walkAndCopy(relPath);
-        continue;
-      }
+    if (ext === '.svg') {
+      fs.copyFileSync(srcPath, destPath);
+      continue;
+    }
 
-      ensureDir(path.dirname(destPath));
+    const webpDest = destPath.endsWith('.webp')
+      ? destPath
+      : path.join(path.dirname(destPath), `${path.parse(relativeDest).name}.webp`);
 
-      const ext = path.extname(entry.name).toLowerCase();
-      const shouldConvert =
-        sharp && (ext === '.jpeg' || ext === '.jpg' || (ext === '.png' && entry.name === 'mateus-ribeiro.png'));
+    if (sharp) {
+      await sharp(srcPath).webp({ quality: 82, effort: 4 }).toFile(webpDest);
+    } else {
+      fs.copyFileSync(srcPath, webpDest);
+    }
 
-      if (shouldConvert) {
-        const webpRel = relPath.replace(/\.(jpe?g|png)$/i, '.webp');
-        const webpDest = path.join(assetsDest, webpRel);
-        await sharp(srcPath).webp({ quality: 82, effort: 4 }).toFile(webpDest);
-        imageMap.set(`assets/${relPath.replace(/\\/g, '/')}`, `assets/${webpRel.replace(/\\/g, '/')}`);
-        log('assets', `convertido ${relPath} → ${webpRel}`);
-      } else if (ext === '.webp' && sharp && !relPath.includes('fonts/')) {
-        await sharp(srcPath).webp({ quality: 82, effort: 4 }).toFile(destPath);
-      } else {
-        fs.copyFileSync(srcPath, destPath);
-      }
+    const srcRef = `assets/${path.relative(assetsSrc, srcPath).replace(/\\/g, '/')}`;
+    const destRef = `assets/${path.relative(assetsDest, webpDest).replace(/\\/g, '/')}`;
+    if (srcRef !== destRef) {
+      imageMap.set(srcRef, destRef);
+    }
+
+    if (assetRef !== destRef) {
+      imageMap.set(assetRef, destRef);
     }
   }
-
-  await walkAndCopy();
 
   for (const fontRel of FONT_FILES) {
     const src = path.join(assetsSrc, fontRel);
@@ -231,6 +275,43 @@ async function copyAssets() {
   }
 
   return imageMap;
+}
+
+function verifyDistBuild(html) {
+  const assetsDir = path.join(DIST, 'assets');
+  const rasterNonWebp = [];
+
+  function walk(dir) {
+    for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+      const fullPath = path.join(dir, entry.name);
+      if (entry.isDirectory()) {
+        walk(fullPath);
+        continue;
+      }
+      if (entry.name.startsWith('.')) continue;
+      const ext = path.extname(entry.name).toLowerCase();
+      if (['.png', '.jpg', '.jpeg'].includes(ext)) {
+        rasterNonWebp.push(path.relative(DIST, fullPath));
+      }
+    }
+  }
+
+  if (fs.existsSync(assetsDir)) walk(assetsDir);
+
+  if (rasterNonWebp.length) {
+    throw new Error(`dist contém raster fora de WebP: ${rasterNonWebp.join(', ')}`);
+  }
+
+  const missing = collectReferencedAssets(html).filter((ref) => {
+    const filePath = path.join(DIST, ref.replace(/^assets\//, 'assets/'));
+    return !fs.existsSync(filePath);
+  });
+
+  if (missing.length) {
+    throw new Error(`dist com referências quebradas: ${missing.join(', ')}`);
+  }
+
+  log('verify', 'assets WebP OK e referências válidas');
 }
 
 function compileTailwind(customCssPath) {
@@ -311,7 +392,7 @@ function transformHtml(sourceHtml, imageMap) {
   );
 
   const headLinks = `
-    <link rel="preload" href="assets/fonts/avant-ique-corporate-logo-geometric-grotesk-font-2026-04-07-06-16-08-utc/Avantique%20Main%20Files/WOFF2/Avantique-Semibold.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="assets/fonts/avant-ique-corporate-logo-geometric-grotesk-font-2026-04-07-06-16-08-utc/Avantique%20Main%20Files/WOFF2/Avantique-Bold.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="assets/fonts/nova-pro-2026-04-07-06-13-42-utc/NovaPro_EE/NovaPro-Regular.otf" as="font" type="font/otf" crossorigin>
     <link rel="stylesheet" href="css/fonts.min.css">
     <link rel="stylesheet" href="css/main.min.css">`;
@@ -345,7 +426,9 @@ async function main() {
   ensureDir(path.join(DIST, 'assets'));
 
   const sourceHtml = readSourceHtml();
-  const imageMap = await copyAssets();
+  assertReferencedAssets(sourceHtml);
+
+  const imageMap = await copyAssets(sourceHtml);
 
   const { html: transformedHtml, customCssPath } = transformHtml(sourceHtml, imageMap);
 
@@ -377,6 +460,8 @@ async function main() {
   });
 
   fs.writeFileSync(path.join(DIST, 'index.html'), minifiedHtml);
+
+  verifyDistBuild(minifiedHtml);
 
   const stats = {
     html: fs.statSync(path.join(DIST, 'index.html')).size,
