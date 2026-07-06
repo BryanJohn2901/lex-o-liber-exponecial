@@ -12,9 +12,9 @@ const ROOT = __dirname;
 const DIST = path.join(ROOT, 'dist');
 const SOURCE_HTML = path.join(ROOT, 'index.html');
 const CANONICAL_URL = 'https://pos.personaltraineracademy.com.br/';
-const SITE_NAME = 'Imersão LEX';
+const SITE_NAME = 'Formação LEX';
 const META_DESCRIPTION =
-  'Imersão LEX: 2 dias de formação presencial em Alphaville, São Paulo, para empresários que querem se tornar a face da autoridade do próprio negócio. 08 e 09 de agosto de 2026.';
+  'Formação LEX: 2 dias presenciais em Alphaville, São Paulo, para empresários que querem se tornar a face da autoridade do próprio negócio. 08 e 09 de agosto de 2026.';
 const OG_IMAGE = `${CANONICAL_URL}assets/lex-icon.webp`;
 
 const FONT_FILES = [
@@ -127,12 +127,12 @@ function injectSeoAndPerformance(html) {
     <meta property="og:locale" content="pt_BR">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="${SITE_NAME}">
-    <meta property="og:title" content="Imersão LEX | Formação em Liderança Exponencial">
+    <meta property="og:title" content="Formação LEX | Liderança Exponencial">
     <meta property="og:description" content="${META_DESCRIPTION}">
     <meta property="og:url" content="${CANONICAL_URL}">
     <meta property="og:image" content="${OG_IMAGE}">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Imersão LEX | Formação em Liderança Exponencial">
+    <meta name="twitter:title" content="Formação LEX | Liderança Exponencial">
     <meta name="twitter:description" content="${META_DESCRIPTION}">
     <meta name="twitter:image" content="${OG_IMAGE}">
     <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
@@ -156,15 +156,15 @@ function fixAccessibility(html) {
   return html
     .replace(
       'src="assets/hero-bg.webp" alt="" class="hero-bg-img',
-      'src="assets/hero-bg.webp" alt="Ambiente da Imersão LEX" class="hero-bg-img'
+      'src="assets/hero-bg.webp" alt="Ambiente da Formação LEX" class="hero-bg-img'
     )
     .replace(
       'src="assets/hero-bg-mobile.webp" alt="" loading="eager"',
-      'src="assets/hero-bg-mobile.webp" alt="Ambiente da Imersão LEX" loading="eager"'
+      'src="assets/hero-bg-mobile.webp" alt="Ambiente da Formação LEX" loading="eager"'
     )
     .replace(
       'src="assets/asset-39.webp" alt="" class="video-poster-img"',
-      'src="assets/asset-39.webp" alt="Capa do vídeo de apresentação da Imersão LEX" class="video-poster-img"'
+      'src="assets/asset-39.webp" alt="Capa do vídeo de apresentação da Formação LEX" class="video-poster-img"'
     )
     .replace(
       'src="assets/asset-6.webp" alt="" class="w-full h-full object-cover opacity-[0.08]"',
@@ -172,7 +172,7 @@ function fixAccessibility(html) {
     )
     .replace(
       'src="assets/asset-8.webp" alt="" class="absolute inset-0 w-full h-full object-cover opacity-20',
-      'src="assets/asset-8.webp" alt="Textura decorativa da seção A Imersão" class="absolute inset-0 w-full h-full object-cover opacity-20'
+      'src="assets/asset-8.webp" alt="Textura decorativa da seção A Formação" class="absolute inset-0 w-full h-full object-cover opacity-20'
     );
 }
 
