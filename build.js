@@ -11,7 +11,7 @@ const { minify: minifyJs } = require('terser');
 const ROOT = __dirname;
 const DIST = path.join(ROOT, 'dist');
 const SOURCE_HTML = path.join(ROOT, 'index.html');
-const CANONICAL_URL = 'https://pos.personaltraineracademy.com.br/';
+const CANONICAL_URL = 'https://mateusribeirolider.com/';
 const SITE_NAME = 'Formação LEX';
 const META_DESCRIPTION =
   'Formação LEX: 2 dias presenciais em Alphaville, São Paulo, para empresários que querem se tornar a face da autoridade do próprio negócio. 08 e 09 de agosto de 2026.';
